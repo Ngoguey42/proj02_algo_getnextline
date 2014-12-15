@@ -6,7 +6,7 @@
 /*   By: ngoguey <ngoguey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/04 19:52:41 by ngoguey           #+#    #+#             */
-/*   Updated: 2014/11/20 07:55:06 by ngoguey          ###   ########.fr       */
+/*   Updated: 2014/12/04 06:27:58 by ngoguey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,23 @@ t_file_d	*get_fd_struct(t_file_d *current, int const fd)
 {
 	t_file_d	*new;
 
+/* 	qprintf("   FDSTRUCT0 %p\n", current); */
 	while (current && current->next && current->fd != fd)
 		current = current->next;
+/* 	qprintf("   FDSTRUCT1 %d\n", fd); */
 	if (current && current->fd == fd)
 		return (current);
 	new = (t_file_d*)malloc(sizeof(t_file_d));
+/* 	qprintf("   FDSTRUCT5 %d %p\n", fd); */
 	if (!new || !(new->firstcall = (t_readi**)malloc(sizeof(t_readi*))))
 		return (NULL);
 	*(new->firstcall) = NULL;
 	new->next = NULL;
 	new->fd = (int)fd;
+/* 	qprintf("   FDSTRUCT9 %d %p\n", fd); */
 	if (current)
 		current->next = new;
+/* 	qprintf("   FDSTRUCT10 %d %p\n", fd); */
 	return (new);
 }
 
@@ -49,8 +54,8 @@ static int	read_fd(t_file_d *fd)
 		cur->read = read(fd->fd, cur->s, BUFF_SIZE);
 	}
 	cur = *(fd->firstcall);
-	while ((cur->end = SEARCHLF ? (char*)SEARCHLF - cur->s : -1) < 0 &&
-			cur->read > 0)
+	while (cur->read > 0 &&
+		(cur->end = SEARCHLF ? (char*)SEARCHLF - cur->s : -1) < 0)
 	{
 		cur->next = (t_readi*)malloc(sizeof(t_readi));
 		cur = cur->next;
@@ -121,26 +126,33 @@ static void	clean_mess(t_file_d **first, t_file_d *cur, int delfd)
 
 int			get_next_line(int const fd, char **line)
 {
-	static t_file_d		**first = NULL;
+	static t_file_d		*first[1] = {NULL};
 	t_file_d			*current;
 	int					rets;
 	int					written;
+	char				*tmp;
 
-	if (!line)
-		return (-1);
-	first = first ? first : (t_file_d**)malloc(sizeof(t_file_d*) * 1);
-	if (!first)
-		return (-1);
+/* 	if (!line) */
+/* 		line = &tmp; */
+/* 	qprintf("debut %p %p\n", first, *first); */
+/* 	first = first ? first : (t_file_d**)malloc(sizeof(t_file_d*) * 1); */
+/* 	if (!first) */
+/* 		return (-1); */
 	current = get_fd_struct(*first, fd);
 	*first = *first ? *first : current;
 	if (!current)
 		return (-1);
 	rets = read_fd(current);
+/* 	qprintf("salut3 %d %p\n", fd, line); */
 	if (rets < 0)
 		return (-1);
-	rets = concat_buffers(current, line, &written);
+	rets = concat_buffers(current, line ? line : &tmp , &written);
+/* 	qprintf("salut5 %d %p\n", fd, line); */
 	clean_mess(first, current, !rets);
+/* 	qprintf("salut4 %d %p\n", fd, line); */
+	if (!line)
+		free(tmp);
 	if (rets == 0 && written > 0)
-		return (1);
+		return (written);
 	return (rets != 0);
 }

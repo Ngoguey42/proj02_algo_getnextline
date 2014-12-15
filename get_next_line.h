@@ -6,14 +6,12 @@
 /*   By: ngoguey <ngoguey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/04 19:36:57 by ngoguey           #+#    #+#             */
-/*   Updated: 2014/11/20 07:55:32 by ngoguey          ###   ########.fr       */
+/*   Updated: 2014/12/02 09:54:24 by ngoguey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-
-int						get_next_line(int const fd, char **line);
 
 # define BUFF_SIZE 32
 
