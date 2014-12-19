@@ -1,7 +1,7 @@
 # Project #2 GET_NEXT_LINE, Nov 2014
 >>>>> #####File descriptor reading
 
-#####Grade ``(tbd/100)`` ``(tbd/118)*``
+#####Grade ``(108/100)`` ``(108/118)*``
 --------  -----------------------
 incoming
 <br><br><br><br><br><br><br><br>
