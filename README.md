@@ -13,10 +13,18 @@ Bonuses:
 - [X] Do not use no more than one static variable.
 - [X] Handle multiple files descriptors.
 
-
 Prototype:
 ```c
 int	get_next_line(int fd, char **line);
+```
+
+Compiling, (Requires a main.c file) ([Mine](https://github.com/Ngoguey42/gnl_testdir)):
+```shell
+make -C libft/ fclean
+make -C libft/
+gcc -Wall -Wextra -Werror -I libft/includes/ -c get_next_line.c
+gcc -Wall -Wextra -Werror -I libft/includes/ -c main.c
+gcc -o test_gnl get_next_line.o main.o -L libft/ -lft
 ```
 
 <br><br><br><br><br><br><br><br>
