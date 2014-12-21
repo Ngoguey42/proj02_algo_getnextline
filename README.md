@@ -18,8 +18,8 @@ Prototype:
 int	get_next_line(int fd, char **line);
 ```
 
-Compiling, (Requires a main.c file) ([Mine](https://github.com/Ngoguey42/gnl_testdir)):
-```shell
+Compiling project, (Requires a main.c file) ([Mine](https://github.com/Ngoguey42/gnl_testdir)):
+```sh
 make -C libft/ fclean
 make -C libft/
 gcc -Wall -Wextra -Werror -I libft/includes/ -c get_next_line.c
