@@ -3,7 +3,22 @@
 
 #####Grade ``(108/100)`` ``(108/118)*``
 --------  -----------------------
-incoming
+Goals:
+- [X] Create a function returning a line read in a given file descriptor.
+A line is terminated by either a '\n', or an EOF.
+- [X] Five functions maximum, and a .h file.
+- [X] No global variables.
+
+Bonuses:
+- [X] Do not use no more than one static variable.
+- [X] Handle multiple files descriptors.
+
+
+Prototype:
+```c
+int	get_next_line(int fd, char **line);
+```
+
 <br><br><br><br><br><br><br><br>
 
 
